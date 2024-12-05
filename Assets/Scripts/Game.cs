@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -33,15 +34,19 @@ public class Game : MonoBehaviour
         form.AddField("username", DBManager.username);
         form.AddField("score", DBManager.score);
 
-        WWW www = new WWW("http://localhost/sqlconnect/savedata.php", form);
-        yield return www;
-        if (www.text == "0"){
-            Debug.Log("Game saved.");
+        using (var w = UnityWebRequest.Post("http://localhost/sqlconnect/savedata.php/", form)){
+            yield return w.SendWebRequest();
+            Debug.Log("savedata.php request: " + w.result);
+            if (w.result == UnityWebRequest.Result.Success){
+                if (w.downloadHandler.text == "0"){
+                    Debug.Log("Game saved.");
+                }
+                else{
+                    Debug.Log("Save failed. Error #" + w.downloadHandler.text);
+                }
+            }
         }
-        else{
-            Debug.Log("Save failed. Error #" + www.text);
-        }
-        
+
         DBManager.LogOut();
         SceneManager.LoadScene("MainMenu");
     }

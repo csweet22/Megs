@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -22,16 +23,19 @@ public class LogIn : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("username", nameField.text);
         form.AddField("password", passwordField.text);
-
-        WWW www = new WWW("http://localhost/sqlconnect/login.php", form);
-        yield return www;
-        if (www.text[0] == '0'){
-            DBManager.username = nameField.text;
-            DBManager.score = int.Parse(www.text.Split("\t")[1]);
-            SceneManager.LoadScene("MainMenu");
-        }
-        else{
-            Debug.Log("User login failed. Error #" + www.text);
+        using (var w = UnityWebRequest.Post("http://localhost/sqlconnect/login.php/", form)){
+            yield return w.SendWebRequest();
+            Debug.Log("login.php request: " + w.result);
+            if (w.result == UnityWebRequest.Result.Success){
+                if (w.downloadHandler.text[0] == '0'){
+                    DBManager.username = nameField.text;
+                    DBManager.score = int.Parse(w.downloadHandler.text.Split("\t")[1]);
+                    SceneManager.LoadScene("MainMenu");
+                }
+                else{
+                    Debug.Log("User login failed. Error #" + w.downloadHandler.text);
+                }
+            }
         }
     }
 
