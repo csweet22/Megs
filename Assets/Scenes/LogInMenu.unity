@@ -1492,6 +1492,7 @@ GameObject:
   - component: {fileID: 1512674209}
   - component: {fileID: 1512674208}
   - component: {fileID: 1512674207}
+  - component: {fileID: 1512674210}
   m_Layer: 5
   m_Name: UsernameInputField
   m_TagString: Untagged
@@ -1668,6 +1669,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512674205}
   m_CullTransparentMesh: 1
+--- !u!114 &1512674210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512674205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 709103a952aafc24689e2ef8e55f984c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextField: {fileID: 1755174898}
 --- !u!1 &1638805883
 GameObject:
   m_ObjectHideFlags: 0
@@ -1850,6 +1864,7 @@ GameObject:
   - component: {fileID: 1755174900}
   - component: {fileID: 1755174899}
   - component: {fileID: 1755174898}
+  - component: {fileID: 1755174901}
   m_Layer: 5
   m_Name: PasswordInputField
   m_TagString: Untagged
@@ -1926,8 +1941,8 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -2026,6 +2041,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755174896}
   m_CullTransparentMesh: 1
+--- !u!114 &1755174901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755174896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 709103a952aafc24689e2ef8e55f984c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextField: {fileID: 1512674207}
 --- !u!1 &1878395597
 GameObject:
   m_ObjectHideFlags: 0

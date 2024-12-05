@@ -1281,6 +1281,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDisplay: {fileID: 664789020}
+  registerButton: {fileID: 394999378}
+  loginButton: {fileID: 1329742359}
+  playButton: {fileID: 1413997127}
 --- !u!1 &1958000021
 GameObject:
   m_ObjectHideFlags: 0
