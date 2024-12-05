@@ -20,7 +20,7 @@ public class LogIn : MonoBehaviour
     private IEnumerator LogInPlayer()
     {
         WWWForm form = new WWWForm();
-        form.AddField("name", nameField.text);
+        form.AddField("username", nameField.text);
         form.AddField("password", passwordField.text);
 
         WWW www = new WWW("http://localhost/sqlconnect/login.php", form);
@@ -37,6 +37,6 @@ public class LogIn : MonoBehaviour
 
     public void VerifyInputs()
     {
-        submitButton.interactable = (nameField.text.Length > 8 && passwordField.text.Length > 8);
+        submitButton.interactable = (nameField.text.Length > 3 && passwordField.text.Length > 7);
     }
 }
