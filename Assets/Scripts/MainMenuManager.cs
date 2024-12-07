@@ -26,7 +26,7 @@ public class MainMenuManager : MonoBehaviour
         loginButton.onClick.AddListener(() => { SceneManager.LoadScene("LogInMenu"); });
         playButton.onClick.AddListener(() => { SceneManager.LoadScene("Game"); });
         logoutButton.onClick.AddListener(LogOut);
-        quitButton.onClick.AddListener(Application.Quit);
+        quitButton.onClick.AddListener(OnQuit);
     }
 
     private void InitializeMenu()
@@ -46,6 +46,12 @@ public class MainMenuManager : MonoBehaviour
     {
         DBManager.LogOut();
         InitializeMenu();
+    }
+
+    private void OnQuit()
+    {
+        LogOut();
+        Application.Quit();
     }
 
     private void OnDestroy()
