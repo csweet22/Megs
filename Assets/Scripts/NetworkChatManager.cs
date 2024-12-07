@@ -1,14 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
 public class NetworkChatManager : NetworkSingleton<NetworkChatManager>
 {
+    [SerializeField] private TMP_Text chatText;
+    [SerializeField] private TMP_InputField chatInputField;
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
         Debug.Log("Chat Spawned.");
+        chatInputField.onSubmit.AddListener((string message) =>
+        {
+            Log(message);
+            chatInputField.text = "";
+        });
     }
 
     public override void OnNetworkDespawn()
@@ -21,7 +30,8 @@ public class NetworkChatManager : NetworkSingleton<NetworkChatManager>
     [Rpc(SendTo.Everyone)]
     private void LogClientRpc(string message, string playerUsername)
     {
-        Debug.Log($"{playerUsername}: {message}");
+        string fullMessage = $"<color=yellow>{playerUsername}</color>: {message}\n";
+        chatText.text += fullMessage;
     }
 
     [Rpc(SendTo.Server, RequireOwnership = false)]
