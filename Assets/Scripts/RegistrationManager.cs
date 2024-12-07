@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class RegistrationManager : MonoBehaviour
 {
-    [SerializeField] private TMP_InputField nameField;
+    [SerializeField] private TMP_InputField usernameField;
     [SerializeField] private TMP_InputField passwordFieldA;
     [SerializeField] private TMP_InputField passwordFieldB;
 
@@ -20,7 +20,7 @@ public class RegistrationManager : MonoBehaviour
     private void Start()
     {
         // Validate username and password values.
-        nameField.onValueChanged.AddListener(VerifyInputs);
+        usernameField.onValueChanged.AddListener(VerifyInputs);
         passwordFieldA.onValueChanged.AddListener(VerifyInputs);
         passwordFieldB.onValueChanged.AddListener(VerifyInputs);
 
@@ -36,7 +36,7 @@ public class RegistrationManager : MonoBehaviour
 
         // Create form for registration.
         WWWForm form = new WWWForm();
-        form.AddField("username", nameField.text);
+        form.AddField("username", usernameField.text);
         form.AddField("password", passwordFieldA.text);
 
         // Call registration endpoint.
@@ -59,7 +59,7 @@ public class RegistrationManager : MonoBehaviour
     private void VerifyInputs(string newValue)
     {
         // Check username is at least 4 characters.
-        bool nameLongEnough = nameField.text.Length >= 4;
+        bool nameLongEnough = usernameField.text.Length >= 4;
         // Check password is at least 8 characters.
         bool passwordLongEnough = passwordFieldA.text.Length >= 8;
         // Check password is at least 8 characters.
