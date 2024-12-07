@@ -22,6 +22,10 @@ public class NetworkMenuManager : MonoBehaviour
 
     private void Awake()
     {
+        if (!DBManager.LoggedIn){
+            SceneManager.LoadScene("MainMenu");
+        }
+
         hostButton.onClick.AddListener(StartHost);
         joinButton.onClick.AddListener(StartClient);
 
