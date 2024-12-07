@@ -11,15 +11,26 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button registerButton;
     [SerializeField] private Button loginButton;
     [SerializeField] private Button playButton;
+    [SerializeField] private Button logoutButton;
 
     void Start()
+    {
+        InitializeMenu();
+    }
+
+    private void InitializeMenu()
     {
         if (DBManager.LoggedIn){
             playerDisplay.text = "Player: " + DBManager.username;
         }
+        else{
+            playerDisplay.text = "Not Logged In.";
+        }
 
         registerButton.gameObject.SetActive(!DBManager.LoggedIn);
         loginButton.gameObject.SetActive(!DBManager.LoggedIn);
+        
+        logoutButton.gameObject.SetActive(DBManager.LoggedIn);
         playButton.gameObject.SetActive(DBManager.LoggedIn);
     }
 
@@ -31,6 +42,12 @@ public class MainMenu : MonoBehaviour
     public void GoToLogIn()
     {
         SceneManager.LoadScene("LogInMenu");
+    }
+
+    public void LogOut()
+    {
+        DBManager.LogOut();
+        InitializeMenu();
     }
 
     public void GoToGame()

@@ -46,8 +46,7 @@ public class Game : MonoBehaviour
                 }
             }
         }
-
-        DBManager.LogOut();
+        
         SceneManager.LoadScene("MainMenu");
     }
 

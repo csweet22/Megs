@@ -41,6 +41,11 @@ public class Registration : MonoBehaviour
         }
     }
 
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public void VerifyInputs()
     {
         submitButton.interactable = (nameField.text.Length > 3 && passwordField.text.Length > 7);
