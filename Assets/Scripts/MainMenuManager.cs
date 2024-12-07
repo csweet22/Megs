@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text playerDisplay;
     [SerializeField] private Button registerButton;
@@ -16,42 +17,29 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         InitializeMenu();
+
+        registerButton.onClick.AddListener(() => { SceneManager.LoadScene("RegisterMenu"); });
+        loginButton.onClick.AddListener(() => { SceneManager.LoadScene("LogInMenu"); });
+        playButton.onClick.AddListener(() => { SceneManager.LoadScene("Game"); });
+        logoutButton.onClick.AddListener(LogOut);
     }
+
+    private void OnDestroy() => registerButton.onClick.RemoveAllListeners();
 
     private void InitializeMenu()
     {
-        if (DBManager.LoggedIn){
-            playerDisplay.text = "Player: " + DBManager.username;
-        }
-        else{
-            playerDisplay.text = "Not Logged In.";
-        }
+        playerDisplay.text = DBManager.LoggedIn ? DBManager.username : "Not Logged In.";
 
         registerButton.gameObject.SetActive(!DBManager.LoggedIn);
         loginButton.gameObject.SetActive(!DBManager.LoggedIn);
-        
+
         logoutButton.gameObject.SetActive(DBManager.LoggedIn);
         playButton.gameObject.SetActive(DBManager.LoggedIn);
-    }
-
-    public void GoToRegister()
-    {
-        SceneManager.LoadScene("RegisterMenu");
-    }
-
-    public void GoToLogIn()
-    {
-        SceneManager.LoadScene("LogInMenu");
     }
 
     public void LogOut()
     {
         DBManager.LogOut();
         InitializeMenu();
-    }
-
-    public void GoToGame()
-    {
-        SceneManager.LoadScene("Game");
     }
 }

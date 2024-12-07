@@ -6,36 +6,34 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
-public class Registration : MonoBehaviour
+public class LogInManager : MonoBehaviour
 {
     [SerializeField] private TMP_InputField nameField;
     [SerializeField] private TMP_InputField passwordField;
 
     [SerializeField] private Button submitButton;
 
-    public void CallRegister()
+    public void CallLogIn()
     {
-        StartCoroutine(Register());
+        StartCoroutine(LogInPlayer());
     }
 
-    private IEnumerator Register()
+    private IEnumerator LogInPlayer()
     {
         WWWForm form = new WWWForm();
         form.AddField("username", nameField.text);
         form.AddField("password", passwordField.text);
-
-
-        using (var w = UnityWebRequest.Post("http://localhost/sqlconnect/register.php/", form)){
+        using (var w = UnityWebRequest.Post("http://localhost/sqlconnect/login.php/", form)){
             yield return w.SendWebRequest();
-            Debug.Log("register.php request: " + w.result);
+            Debug.Log("login.php request: " + w.result);
             if (w.result == UnityWebRequest.Result.Success){
-                if (w.downloadHandler.text == "0"){
-                    Debug.Log("User created successfully.");
+                if (w.downloadHandler.text[0] == '0'){
+                    DBManager.username = nameField.text;
+                    DBManager.score = int.Parse(w.downloadHandler.text.Split("\t")[1]);
                     SceneManager.LoadScene("MainMenu");
                 }
                 else{
-                    Debug.Log("User creation failed. Error #" + w.downloadHandler.text);
+                    Debug.Log("User login failed. Error #" + w.downloadHandler.text);
                 }
             }
         }
