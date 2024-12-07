@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class NetworkChatManager : NetworkPersistentSingleton<NetworkChatManager>
+public class NetworkChatManager : NetworkSingleton<NetworkChatManager>
 {
     public override void OnNetworkSpawn()
     {

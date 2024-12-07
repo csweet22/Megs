@@ -40,7 +40,7 @@ public class NetworkMenuManager : MonoBehaviour
         // Star the hosting.
         NetworkManager.Singleton.StartHost();
 
-        SceneManager.LoadScene("Hub");
+        NetworkManager.Singleton.SceneManager.LoadScene("Hub", LoadSceneMode.Single);
     }
 
     private void StartClient()
@@ -51,7 +51,7 @@ public class NetworkMenuManager : MonoBehaviour
 
         NetworkManager.Singleton.StartClient();
 
-        SceneManager.LoadScene("Hub");
+        NetworkManager.Singleton.SceneManager.LoadScene("Hub", LoadSceneMode.Single);
     }
 
     private void SetUpConnectionData()
