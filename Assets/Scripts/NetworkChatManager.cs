@@ -19,19 +19,19 @@ public class NetworkChatManager : NetworkSingleton<NetworkChatManager>
 
 
     [Rpc(SendTo.Everyone)]
-    private void LogClientRpc(string message, ulong clientId)
+    private void LogClientRpc(string message, string playerUsername)
     {
-        Debug.Log($"{clientId}: {message}");
+        Debug.Log($"{playerUsername}: {message}");
     }
 
     [Rpc(SendTo.Server, RequireOwnership = false)]
-    private void ServerLogServerRpc(string message, ulong clientId)
+    private void ServerLogServerRpc(string message, string playerUsername)
     {
-        LogClientRpc(message, clientId);
+        LogClientRpc(message, playerUsername);
     }
 
     public void Log(string message)
     {
-        ServerLogServerRpc(message, NetworkManager.Singleton.LocalClientId);
+        ServerLogServerRpc(message, DBManager.username);
     }
 }
