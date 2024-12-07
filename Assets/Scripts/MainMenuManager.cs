@@ -40,6 +40,13 @@ public class MainMenuManager : MonoBehaviour
         // If logged in, show logout & play buttons.
         logoutButton.gameObject.SetActive(DBManager.LoggedIn);
         playButton.gameObject.SetActive(DBManager.LoggedIn);
+
+        if (DBManager.LoggedIn){
+            playButton.Select();
+        }
+        else{
+            loginButton.Select();
+        }
     }
 
     public void LogOut()
