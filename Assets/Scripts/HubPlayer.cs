@@ -18,18 +18,26 @@ public class HubPlayer : NetworkBehaviour
             Debug.LogError("Could not find rigidbody.");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!IsOwner) return;
 
-        Vector3 moveDir = new Vector3(Mathf.Round(Input.GetAxis("Horizontal")), 0,
-            Mathf.Round(Input.GetAxis("Vertical")));
+        Vector3 moveDir = Vector3.zero;
+
+        if (Input.GetKey(KeyCode.D))
+            moveDir += Vector3.right;
+        if (Input.GetKey(KeyCode.A))
+            moveDir -= Vector3.right;
+        if (Input.GetKey(KeyCode.W))
+            moveDir += Vector3.forward;
+        if (Input.GetKey(KeyCode.S))
+            moveDir -= Vector3.forward;
 
         float moveSpeed = 3.0f;
 
         Vector3 currentVelocity = rb.linearVelocity;
         Vector3 targetVelocity = moveDir.magnitude * moveDir.normalized * moveSpeed;
-        Vector3 velocityDelta = (targetVelocity - currentVelocity) * Time.deltaTime;
+        Vector3 velocityDelta = (targetVelocity - currentVelocity);
         rb.AddForce(velocityDelta, ForceMode.VelocityChange);
     }
 }
