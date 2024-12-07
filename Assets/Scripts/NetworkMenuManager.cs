@@ -37,7 +37,7 @@ public class NetworkMenuManager : MonoBehaviour
 
     private void StartHost()
     {
-        if (!ValidateFields()) return;
+        ValidateFields();
 
         SetUpConnectionData();
 
@@ -49,7 +49,7 @@ public class NetworkMenuManager : MonoBehaviour
 
     private void StartClient()
     {
-        if (!ValidateFields()) return;
+        ValidateFields();
 
         SetUpConnectionData();
 
@@ -66,17 +66,10 @@ public class NetworkMenuManager : MonoBehaviour
         transport.ConnectionData.Port = Convert.ToUInt16(portField.text);
     }
 
-    private bool ValidateFields()
+    private void ValidateFields()
     {
-        bool valid = true;
-
-        if (addressField.text == "") valid = false;
-        if (portField.text == "") valid = false;
-
-        if (!valid)
-            status.text = "Please enter a valid IP address & port.";
-
-        return valid;
+        if (addressField.text == "") addressField.text = "127.0.0.1";
+        if (portField.text == "") portField.text = "7777";
     }
 
     private void OnDestroy()
