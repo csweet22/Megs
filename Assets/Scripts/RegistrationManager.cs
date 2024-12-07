@@ -3,12 +3,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class RegistrationManager : MonoBehaviour
 {
     [SerializeField] private TMP_InputField nameField;
-    [SerializeField] private TMP_InputField passwordField;
+    [SerializeField] private TMP_InputField passwordFieldA;
+    [SerializeField] private TMP_InputField passwordFieldB;
 
     [SerializeField] private Button submitButton;
     [SerializeField] private Button backButton;
@@ -19,7 +21,8 @@ public class RegistrationManager : MonoBehaviour
     {
         // Validate username and password values.
         nameField.onValueChanged.AddListener(VerifyInputs);
-        passwordField.onValueChanged.AddListener(VerifyInputs);
+        passwordFieldA.onValueChanged.AddListener(VerifyInputs);
+        passwordFieldB.onValueChanged.AddListener(VerifyInputs);
 
         // Connect button behaviours.
         submitButton.onClick.AddListener(() => { StartCoroutine(Register()); });
@@ -34,7 +37,7 @@ public class RegistrationManager : MonoBehaviour
         // Create form for registration.
         WWWForm form = new WWWForm();
         form.AddField("username", nameField.text);
-        form.AddField("password", passwordField.text);
+        form.AddField("password", passwordFieldA.text);
 
         // Call registration endpoint.
         using (var w = UnityWebRequest.Post("http://localhost/sqlconnect/register.php/", form)){
@@ -58,9 +61,12 @@ public class RegistrationManager : MonoBehaviour
         // Check username is at least 4 characters.
         bool nameLongEnough = nameField.text.Length >= 4;
         // Check password is at least 8 characters.
-        bool passwordLongEnough = passwordField.text.Length >= 8;
+        bool passwordLongEnough = passwordFieldA.text.Length >= 8;
+        // Check password is at least 8 characters.
+        bool passwordsMatch = passwordFieldA.text == passwordFieldB.text;
+        
         // Toggle submit button on if fields are valid.
-        submitButton.interactable = nameLongEnough && passwordLongEnough;
+        submitButton.interactable = nameLongEnough && passwordLongEnough && passwordsMatch;
 
         // Display user facing status message.
         statusText.text = "";
@@ -68,5 +74,7 @@ public class RegistrationManager : MonoBehaviour
             statusText.text += "\nUsername must be at least 4 characters long.";
         if (!passwordLongEnough)
             statusText.text += "\nPassword must be at least 8 characters long.";
+        if (!passwordsMatch)
+            statusText.text += "\nPassword do not match.";
     }
 }
