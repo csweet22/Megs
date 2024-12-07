@@ -12,7 +12,7 @@ public class HubPlayer : NetworkBehaviour
     {
         base.OnNetworkSpawn();
 
-        if (TryGetComponent<Rigidbody>(out Rigidbody _rb))
+        if (TryGetComponent(out Rigidbody _rb))
             rb = _rb;
         else
             Debug.LogError("Could not find rigidbody.");
