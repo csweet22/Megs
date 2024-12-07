@@ -18,13 +18,13 @@ public class NetworkChatManager : NetworkPersistentSingleton<NetworkChatManager>
     }
 
 
-    [ClientRpc]
+    [Rpc(SendTo.Everyone)]
     private void LogClientRpc(string message, ulong clientId)
     {
         Debug.Log($"{clientId}: {message}");
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server, RequireOwnership = false)]
     private void ServerLogServerRpc(string message, ulong clientId)
     {
         LogClientRpc(message, clientId);
