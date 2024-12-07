@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -35,7 +36,7 @@ public class LogInManager : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("username", usernameField.text);
         form.AddField("password", passwordField.text);
-        
+
         // Attempt login to server.
         using (var w = UnityWebRequest.Post("http://localhost/sqlconnect/login.php/", form)){
             yield return w.SendWebRequest();
@@ -56,4 +57,12 @@ public class LogInManager : MonoBehaviour
 
     private void VerifyInputs(string newValue) =>
         submitButton.interactable = (usernameField.text.Length > 0 && passwordField.text.Length > 0);
+
+    private void OnDestroy()
+    {
+        usernameField.onValueChanged.RemoveAllListeners();
+        passwordField.onValueChanged.RemoveAllListeners();
+        submitButton.onClick.RemoveAllListeners();
+        backButton.onClick.RemoveAllListeners();
+    }
 }

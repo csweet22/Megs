@@ -76,4 +76,13 @@ public class RegistrationManager : MonoBehaviour
         if (!passwordsMatch)
             statusText.text += "\nPassword do not match.";
     }
+
+    private void OnDestroy()
+    { 
+        usernameField.onValueChanged.RemoveAllListeners();
+        passwordFieldA.onValueChanged.RemoveAllListeners();
+        passwordFieldB.onValueChanged.RemoveAllListeners();
+        submitButton.onClick.RemoveAllListeners();
+        backButton.onClick.RemoveAllListeners();
+    }
 }
