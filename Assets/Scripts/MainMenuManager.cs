@@ -24,7 +24,7 @@ public class MainMenuManager : MonoBehaviour
         // Binding button behaviours.
         registerButton.onClick.AddListener(() => { SceneManager.LoadScene("RegisterMenu"); });
         loginButton.onClick.AddListener(() => { SceneManager.LoadScene("LogInMenu"); });
-        playButton.onClick.AddListener(() => { SceneManager.LoadScene("Game"); });
+        playButton.onClick.AddListener(() => { SceneManager.LoadScene("NetworkMenu"); });
         logoutButton.onClick.AddListener(LogOut);
         quitButton.onClick.AddListener(OnQuit);
     }

@@ -1,0 +1,77 @@
+using System;
+using System.Collections;
+using System.Net;
+using TMPro;
+using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
+
+public class NetworkMenuManager : MonoBehaviour
+{
+    [SerializeField] private TMP_InputField addressField;
+    [SerializeField] private TMP_InputField portField;
+
+    [SerializeField] private Button hostButton;
+    [SerializeField] private Button joinButton;
+    [SerializeField] private Button exitButton;
+
+    [SerializeField] private TMP_Text status;
+
+    private void Awake()
+    {
+        hostButton.onClick.AddListener(StartHost);
+        joinButton.onClick.AddListener(StartClient);
+
+        exitButton.onClick.AddListener(() => { SceneManager.LoadScene("MainMenu"); });
+    }
+
+    private void StartHost()
+    {
+        if (!ValidateFields()) return;
+
+        SetUpConnectionData();
+
+        // Star the hosting.
+        NetworkManager.Singleton.StartHost();
+    }
+
+    private void StartClient()
+    {
+        if (!ValidateFields()) return;
+
+        SetUpConnectionData();
+
+        NetworkManager.Singleton.StartClient();
+    }
+
+    private void SetUpConnectionData()
+    {
+        // Set host address & port.
+        UnityTransport transport = NetworkManager.Singleton.gameObject.GetComponent<UnityTransport>();
+        transport.ConnectionData.Address = addressField.text;
+        transport.ConnectionData.Port = Convert.ToUInt16(portField.text);
+    }
+
+    private bool ValidateFields()
+    {
+        bool valid = true;
+
+        if (addressField.text == "") valid = false;
+        if (portField.text == "") valid = false;
+
+        if (!valid)
+            status.text = "Please enter a valid IP address & port.";
+
+        return valid;
+    }
+
+    private void OnDestroy()
+    {
+        hostButton.onClick.RemoveAllListeners();
+        joinButton.onClick.RemoveAllListeners();
+        exitButton.onClick.RemoveAllListeners();
+    }
+}
