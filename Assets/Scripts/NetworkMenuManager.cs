@@ -54,8 +54,6 @@ public class NetworkMenuManager : MonoBehaviour
         SetUpConnectionData();
 
         NetworkManager.Singleton.StartClient();
-
-        NetworkManager.Singleton.SceneManager.LoadScene("Hub", LoadSceneMode.Single);
     }
 
     private void SetUpConnectionData()
