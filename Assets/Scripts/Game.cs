@@ -14,8 +14,7 @@ public class Game : MonoBehaviour
 
     private void Awake()
     {
-        // Why not just check LoggedIn?
-        if (DBManager.username == null){
+        if (!DBManager.LoggedIn){
             SceneManager.LoadScene("MainMenu");
         }
 
