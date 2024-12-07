@@ -167,5 +167,6 @@ PrefabInstance:
       propertyPath: m_text
       value: username
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 614791786145184942, guid: 14be1d49e78f58b4da9aeef6e825b428, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 14be1d49e78f58b4da9aeef6e825b428, type: 3}
