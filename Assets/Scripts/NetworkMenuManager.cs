@@ -26,6 +26,9 @@ public class NetworkMenuManager : MonoBehaviour
         joinButton.onClick.AddListener(StartClient);
 
         exitButton.onClick.AddListener(() => { SceneManager.LoadScene("MainMenu"); });
+
+        NetworkManager.Singleton.OnClientConnectedCallback += id => { Debug.Log($"Client {id} connected."); };
+        NetworkManager.Singleton.OnClientDisconnectCallback += id => { Debug.Log($"Client {id} disconnected."); };
     }
 
     private void StartHost()
